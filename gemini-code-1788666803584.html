@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decant Planet ERP</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f5f6fa;
+    color: #222;
+}
+
+/* LOGIN */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #111827, #312e81);
+}
+
+.login-box {
+    width: 400px;
+    background: white;
+    padding: 35px 30px;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    text-align: center;
+}
+
+.login-logo-img {
+    max-width: 220px;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    outline: none;
+    text-align: left;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #1c355e;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-box button:hover {
+    background: #152747;
+}
+
+/* APP */
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #111827;
+    color: white;
+    padding: 20px 15px;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.brand img {
+    max-width: 140px;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+.brand h2 {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.brand span {
+    display: block;
+    color: #a5b4fc;
+    font-size: 11px;
+    margin-top: 3px;
+    font-style: italic;
+}
+
+.menu button {
+    width: 100%;
+    text-align: left;
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    background: transparent;
+    color: #d1d5db;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu button:hover,
+.menu button.active {
+    background: #1c355e;
+    color: white;
+}
+
+.main {
+    margin-left: 250px;
+    padding: 25px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topbar h1 {
+    font-size: 25px;
+}
+
+.user {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+/* DASHBOARD */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card .value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.card .icon {
+    font-size: 25px;
+    float: right;
+}
+
+/* SECTIONS */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.panel {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn {
+    background: #1c355e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background: #25467d;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.btn-success {
+    background: #059669;
+}
+
+.btn-success:hover {
+    background: #047857;
+}
+
+.btn-secondary {
+    background: #6b7280;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 13px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #f9fafb;
+}
+
+.badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-red {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-yellow {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* MODAL & FORMS */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #555;
+    text-align: left;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+.search {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    width: 250px;
+}
+
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    width: 520px;
+    max-width: 92%;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+/* POS */
+.pos-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.product {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+}
+
+.product:hover {
+    border-color: #1c355e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.product h4 {
+    margin-bottom: 7px;
+}
+
+.product p {
+    color: #1c355e;
+    font-weight: bold;
+}
+
+.cart {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cart-qty-btn {
+    width: 22px;
+    height: 22px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.total {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* INVOICE STYLES */
+.invoice-container {
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.invoice-header {
+    border-bottom: 2px solid #1c355e;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.invoice-logo-img {
+    max-width: 180px;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.invoice-table {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 8px;
+    font-size: 13px;
+}
+
+/* PRINT MEDIA */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #invoicePrintArea, #invoicePrintArea * {
+        visibility: visible;
+    }
+    #invoicePrintArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+    }
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .pos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 700px) {
+    .sidebar {
+        width: 70px;
+    }
+    .brand h2, .brand span, .brand img, .menu button span {
+        display: none;
+    }
+    .main {
+        margin-left: 70px;
+    }
+    .cards, .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .product-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+    <div class="login-box">
+        <img src="logo.png" alt="Decant Planet" class="login-logo-img">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+</div>
+
+<!-- APPLICATION -->
+<div class="app" id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <img src="logo.png" alt="Decant Planet">
+            <h2>DECANT PLANET</h2>
+            <span>A Universe of Fragrance</span>
+        </div>
+
+        <div class="menu">
+            <button class="active" onclick="showSection('dashboard',this)">📊 <span>Dashboard</span></button>
+            <button onclick="showSection('products',this)">🧴 <span>Products</span></button>
+            <button onclick="showSection('inventory',this)">📦 <span>Inventory</span></button>
+            <button onclick="showSection('sales',this)">🛒 <span>Sales / POS</span></button>
+            <button onclick="showSection('purchases',this)">🚚 <span>Purchases</span></button>
+            <button onclick="showSection('customers',this)">👥 <span>Customers</span></button>
+            <button onclick="showSection('suppliers',this)">🏢 <span>Suppliers</span></button>
+            <button onclick="showSection('expenses',this)">💰 <span>Expenses</span></button>
+            <button onclick="showSection('reports',this)">📈 <span>Reports</span></button>
+            <button onclick="showSection('admins',this)">👤 <span>Admins</span></button>
+            <button onclick="logout()">🚪 <span>Logout</span></button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+        <div class="topbar">
+            <h1 id="pageTitle">Dashboard</h1>
+            <div class="user" id="loggedInUserDisplay">👤 Admin</div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <section class="section active" id="dashboard">
+            <div class="cards">
+                <div class="card">
+                    <span class="icon">💰</span>
+                    <h3>Today's Sales</h3>
+                    <div class="value" id="dashboardTodaySales">Rs. 0</div>
+                </div>
+                <div class="card">
+                    <span class="icon">🛍️</span>
+                    <h3>Total Sales</h3>
+                    <div class="value" id="dashboardTotalSales">Rs. 0</div>
+                </div>
+                <div class="card">
+                    <span class="icon">📦</span>
+                    <h3>Stock Items</h3>
+                    <div class="value" id="dashboardStockCount">0</div>
+                </div>
+                <div class="card">
+                    <span class="icon">👥</span>
+                    <h3>Customers</h3>
+                    <div class="value" id="dashboardCustomerCount">0</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Recent Sales</h2>
+                    <button class="btn" onclick="showSection('sales')">Open POS</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentSalesTbody">
+                        <tr>
+                            <td colspan="5" style="text-align:center;color:#888;">No sales records found. Completed POS sales will appear here.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section class="section" id="products">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Perfume Products</h2>
+                    <button class="btn" onclick="addProduct()">+ Add Product</button>
+                </div>
+                <input class="search" placeholder="Search perfume..." onkeyup="searchProducts(this.value)">
+                <br><br>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Perfume</th>
+                            <th>Brand</th>
+                            <th>Size</th>
+                            <th>Cost</th>
+                            <th>Selling Price</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- INVENTORY -->
+        <section class="section" id="inventory">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Inventory Management</h2>
+                    <div class="header-actions">
+                        <button class="btn" onclick="addProduct()">+ Add Item</button>
+                        <button class="btn btn-success" onclick="saveInventoryToStorage()">💾 Save Inventory Changes</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Product</th>
+                            <th>Size</th>
+                            <th>Cost Price</th>
+                            <th>Selling Price</th>
+                            <th>Current Stock</th>
+                            <th>Minimum Stock</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SALES / POS -->
+        <section class="section" id="sales">
+            <div class="pos-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Select Fragrances</h2>
+                        <input class="search" style="width:200px" placeholder="Search item..." onkeyup="filterPosGrid(this.value)">
+                    </div>
+                    <div class="product-grid" id="posProductGrid"></div>
+                </div>
+
+                <div class="cart">
+                    <h2>🛒 Order Summary</h2>
+                    <br>
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label>Customer Name</label>
+                        <input type="text" id="posCustomerName" placeholder="e.g. Kasun Silva" value="Walk-in Customer">
+                    </div>
+                    <div class="form-group" style="margin-bottom:15px;">
+                        <label>Customer Email (for invoice)</label>
+                        <input type="email" id="posCustomerEmail" placeholder="customer@example.com">
+                    </div>
+
+                    <div id="cartItems"></div>
+
+                    <div class="total">
+                        Total: <span id="cartTotal">Rs. 0</span>
+                    </div>
+                    <br>
+                    <button class="btn btn-success" style="width:100%;font-size:16px;padding:12px;" onclick="completeSale()">Complete Sale & Generate Invoice</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PURCHASES -->
+        <section class="section" id="purchases">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Purchases</h2>
+                    <button class="btn" onclick="alert('Purchase orders workflow ready.')">+ New Purchase</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Purchase No.</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchasesTableBody">
+                        <tr>
+                            <td colspan="5" style="text-align:center;color:#888;">No purchases recorded yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CUSTOMERS -->
+        <section class="section" id="customers">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Customers</h2>
+                    <button class="btn" onclick="addCustomerPrompt()">+ Add Customer</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Total Purchases</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align:center;color:#888;">No customer profiles created yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SUPPLIERS -->
+        <section class="section" id="suppliers">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Suppliers</h2>
+                    <button class="btn" onclick="addSupplierPrompt()">+ Add Supplier</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Supplier</th>
+                            <th>Contact</th>
+                            <th>Phone</th>
+                            <th>Total Purchases</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliersTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align:center;color:#888;">No suppliers added yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- EXPENSES -->
+        <section class="section" id="expenses">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Expenses</h2>
+                    <button class="btn" onclick="addExpensePrompt()">+ Add Expense</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expensesTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align:center;color:#888;">No expenses recorded yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- REPORTS -->
+        <section class="section" id="reports">
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Revenue</h3>
+                    <div class="value" id="reportRevenue">Rs. 0</div>
+                </div>
+                <div class="card">
+                    <h3>Total Cost</h3>
+                    <div class="value" id="reportCost">Rs. 0</div>
+                </div>
+                <div class="card">
+                    <h3>Gross Profit</h3>
+                    <div class="value" id="reportProfit">Rs. 0</div>
+                </div>
+                <div class="card">
+                    <h3>Expenses</h3>
+                    <div class="value">Rs. 0</div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Reports</h2>
+                <br>
+                <button class="btn" onclick="alert('Exporting Sales Report...')">Sales Report</button>
+                <button class="btn" onclick="alert('Exporting Profit Report...')">Profit Report</button>
+                <button class="btn" onclick="alert('Exporting Inventory Report...')">Inventory Report</button>
+                <button class="btn" onclick="alert('Exporting Purchase Report...')">Purchase Report</button>
+            </div>
+        </section>
+
+        <!-- ADMINS -->
+        <section class="section" id="admins">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>System Administrators</h2>
+                    <button class="btn" onclick="openAddAdminModal()">+ Add Admin</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- EDIT ITEM MODAL -->
+<div class="modal-backdrop" id="editModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle">Edit Item</h2>
+            <button onclick="closeEditModal()" style="border:none;background:none;font-size:20px;cursor:pointer;">✕</button>
+        </div>
+        <input type="hidden" id="editSku">
+        <div class="form-group" style="margin-bottom:12px;"><label>Item Name / Perfume</label><input type="text" id="editName"></div>
+        <div class="form-group" style="margin-bottom:12px;"><label>Brand</label><input type="text" id="editBrand"></div>
+        <div class="form-group" style="margin-bottom:12px;"><label>Size</label><input type="text" id="editSize"></div>
+        <div class="form-grid" style="margin-bottom:12px;">
+            <div class="form-group"><label>Cost Price (Rs.)</label><input type="number" id="editCost"></div>
+            <div class="form-group"><label>Selling Price (Rs.)</label><input type="number" id="editSelling"></div>
+        </div>
+        <div class="form-grid" style="margin-bottom:12px;">
+            <div class="form-group"><label>Stock Qty</label><input type="number" id="editStock"></div>
+            <div class="form-group"><label>Min Stock</label><input type="number" id="editMinStock"></div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-danger" onclick="deleteCurrentItem()">Delete Item</button>
+            <div>
+                <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button class="btn btn-success" onclick="saveItemChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD ADMIN MODAL -->
+<div class="modal-backdrop" id="addAdminModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Add System Administrator</h2>
+            <button onclick="closeAddAdminModal()" style="border:none;background:none;font-size:20px;cursor:pointer;">✕</button>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+            <label>Full Name</label>
+            <input type="text" id="adminFullName" placeholder="e.g. Lakshitha Dissanayake">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+            <label>Username</label>
+            <input type="text" id="adminUsername" placeholder="e.g. lakshitha">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+            <label>Password</label>
+            <input type="password" id="adminPassword" placeholder="Create password">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+            <label>Role</label>
+            <select id="adminRole">
+                <option value="Super Admin">Super Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Sales Admin">Sales Admin</option>
+            </select>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeAddAdminModal()">Cancel</button>
+            <button class="btn btn-success" onclick="saveNewAdmin()">Create Administrator</button>
+        </div>
+    </div>
+</div>
+
+<!-- INVOICE MODAL -->
+<div class="modal-backdrop" id="invoiceModal">
+    <div class="modal" style="width: 600px;">
+        <div class="modal-header no-print">
+            <h2>Sale Invoice</h2>
+            <button onclick="closeInvoiceModal()" style="border:none;background:none;font-size:20px;cursor:pointer;">✕</button>
+        </div>
+
+        <div id="invoicePrintArea" class="invoice-container">
+            <div class="invoice-header">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <img src="logo.png" alt="Decant Planet" class="invoice-logo-img">
+                        <p style="font-size:12px; color:#444; margin-top:3px;">A Universe of Fragrance.</p>
+                        <p style="font-size:12px; color:#666;">Kekirawa, Sri Lanka</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <h3 id="invNumber" style="font-size:16px; color:#1c355e; font-weight:bold;">INV-0001</h3>
+                        <p id="invDate" style="font-size:12px; color:#666;">--</p>
+                    </div>
+                </div>
+                <div style="margin-top:15px; font-size:13px; line-height:1.4;">
+                    <strong>Billed To:</strong>
+                    <div id="invCustomerName" style="color:#222; font-weight:500;">Walk-in Customer</div>
+                    <div id="invCustomerEmail" style="color:#666;"></div>
+                </div>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr style="background:#f3f4f6; border-bottom:1px solid #ddd;">
+                        <th>Item</th>
+                        <th style="text-align:center;">Qty</th>
+                        <th style="text-align:right;">Price</th>
+                        <th style="text-align:right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceTableBody"></tbody>
+            </table>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+                <div style="width:200px; text-align:right;">
+                    <div style="font-size:16px; font-weight:bold; color:#111;">
+                        Total: <span id="invTotalAmount">Rs. 0</span>
+                    </div>
+                    <p style="font-size:11px; color:#059669; margin-top:4px;">Status: Paid</p>
+                </div>
+            </div>
+
+            <p style="text-align:center; font-size:11px; color:#888; margin-top:20px; border-top:1px dashed #ddd; padding-top:10px;">
+                Thank you for shopping with Decant Planet! ✨
+            </p>
+        </div>
+
+        <div class="modal-actions no-print" style="margin-top:20px;">
+            <button class="btn btn-secondary" onclick="emailInvoice()">📧 Email Invoice</button>
+            <button class="btn btn-success" onclick="printInvoice()">🖨️ Print / Save as PDF</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* INVENTORY DATA STATE */
+let inventoryData = loadInventoryFromStorage();
+let salesHistory = loadSalesFromStorage();
+let adminsList = loadAdminsFromStorage();
+let cart = [];
+let lastCompletedInvoice = null;
+
+function loadInventoryFromStorage() {
+    const saved = localStorage.getItem("decant_planet_inventory");
+    if (saved) {
+        try { return JSON.parse(saved); } catch(e) { return []; }
+    }
+    return [];
+}
+
+function saveInventoryToStorage() {
+    localStorage.setItem("decant_planet_inventory", JSON.stringify(inventoryData));
+    alert("✅ All inventory changes saved permanently!");
+}
+
+function loadSalesFromStorage() {
+    const saved = localStorage.getItem("decant_planet_sales");
+    if (saved) {
+        try { return JSON.parse(saved); } catch(e) { return []; }
+    }
+    return [];
+}
+
+function saveSalesToStorage() {
+    localStorage.setItem("decant_planet_sales", JSON.stringify(salesHistory));
+}
+
+function loadAdminsFromStorage() {
+    const saved = localStorage.getItem("decant_planet_admins");
+    if (saved) {
+        try { return JSON.parse(saved); } catch(e) { return getDefaultAdmins(); }
+    }
+    return getDefaultAdmins();
+}
+
+function getDefaultAdmins() {
+    return [
+        { name: "Super Administrator", username: "admin", role: "Super Admin", status: "Active", password: "admin123" }
+    ];
+}
+
+function saveAdminsToStorage() {
+    localStorage.setItem("decant_planet_admins", JSON.stringify(adminsList));
+}
+
+/* INITIAL RENDERING */
+function renderAll() {
+    renderInventoryTable();
+    renderProductTable();
+    renderPosProducts();
+    renderSalesHistory();
+    renderAdminsTable();
+    updateDashboardStats();
+}
+
+function updateDashboardStats() {
+    const totalUnits = inventoryData.reduce((sum, item) => sum + Number(item.stock), 0);
+    const elemStock = document.getElementById("dashboardStockCount");
+    if (elemStock) elemStock.innerText = totalUnits;
+
+    const totalSalesAmount = salesHistory.reduce((sum, s) => sum + Number(s.total), 0);
+    const elemTotalSales = document.getElementById("dashboardTotalSales");
+    if (elemTotalSales) elemTotalSales.innerText = "Rs. " + totalSalesAmount.toLocaleString();
+
+    const todayDate = new Date().toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' });
+    const todaySalesAmount = salesHistory
+        .filter(s => s.date === todayDate)
+        .reduce((sum, s) => sum + Number(s.total), 0);
+    const elemTodaySales = document.getElementById("dashboardTodaySales");
+    if (elemTodaySales) elemTodaySales.innerText = "Rs. " + todaySalesAmount.toLocaleString();
+
+    // Unique customers
+    const uniqueCustomers = new Set(salesHistory.map(s => s.customerName.trim().toLowerCase())).size;
+    const elemCustomers = document.getElementById("dashboardCustomerCount");
+    if (elemCustomers) elemCustomers.innerText = uniqueCustomers;
+
+    // Reports figures
+    const elemRev = document.getElementById("reportRevenue");
+    if (elemRev) elemRev.innerText = "Rs. " + totalSalesAmount.toLocaleString();
+    const elemProfit = document.getElementById("reportProfit");
+    if (elemProfit) elemProfit.innerText = "Rs. " + totalSalesAmount.toLocaleString();
+}
+
+function renderSalesHistory() {
+    const tbody = document.getElementById("recentSalesTbody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    if (salesHistory.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#888;">No sales records found. Completed POS sales will appear here.</td></tr>`;
+        return;
+    }
+
+    salesHistory.slice(0, 15).forEach(sale => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${sale.number}</td>
+            <td>${sale.customerName}</td>
+            <td>${sale.date}</td>
+            <td>Rs. ${Number(sale.total).toLocaleString()}</td>
+            <td><span class="badge badge-green">Paid</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function renderInventoryTable() {
+    const tbody = document.getElementById("inventoryTableBody");
+    tbody.innerHTML = "";
+
+    if (inventoryData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:#888;">No items in inventory. Click <strong>+ Add Item</strong> above to get started.</td></tr>`;
+        return;
+    }
+
+    inventoryData.forEach(item => {
+        const isLow = Number(item.stock) <= Number(item.minStock);
+        const statusBadge = isLow
+            ? `<span class="badge badge-red">Low Stock</span>`
+            : `<span class="badge badge-green">Good</span>`;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.sku}</td>
+            <td><strong>${item.name}</strong></td>
+            <td>${item.size}</td>
+            <td>Rs. ${Number(item.cost).toLocaleString()}</td>
+            <td>Rs. ${Number(item.selling).toLocaleString()}</td>
+            <td>${item.stock}</td>
+            <td>${item.minStock}</td>
+            <td>${statusBadge}</td>
+            <td>
+                <button class="btn btn-sm" onclick="openEditModal('${item.sku}')">✏️ Edit</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function renderProductTable() {
+    const tbody = document.getElementById("productTableBody");
+    tbody.innerHTML = "";
+
+    if (inventoryData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#888;">No products recorded. Click <strong>+ Add Product</strong> above.</td></tr>`;
+        return;
+    }
+
+    inventoryData.forEach(item => {
+        const badgeClass = Number(item.stock) <= Number(item.minStock) ? "badge-red" : "badge-green";
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.sku}</td>
+            <td>${item.name}</td>
+            <td>${item.brand}</td>
+            <td>${item.size}</td>
+            <td>Rs. ${Number(item.cost).toLocaleString()}</td>
+            <td>Rs. ${Number(item.selling).toLocaleString()}</td>
+            <td><span class="badge ${badgeClass}">${item.stock}</span></td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function renderPosProducts(filter = "") {
+    const grid = document.getElementById("posProductGrid");
+    grid.innerHTML = "";
+
+    const matched = inventoryData.filter(item => 
+        item.name.toLowerCase().includes(filter.toLowerCase()) || 
+        item.brand.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    if (matched.length === 0) {
+        grid.innerHTML = `<div style="grid-column: span 3; text-align: center; color: #888; padding: 20px;">No fragrances available in inventory.</div>`;
+        return;
+    }
+
+    matched.forEach(item => {
+        const outOfStock = Number(item.stock) <= 0;
+        const div = document.createElement("div");
+        div.className = "product";
+        div.style.opacity = outOfStock ? "0.5" : "1";
+        div.style.cursor = outOfStock ? "not-allowed" : "pointer";
+        
+        if (!outOfStock) {
+            div.onclick = () => addToCart(item.sku);
+        }
+        div.innerHTML = `
+            <h4>${item.name}</h4>
+            <small>${item.size} (${item.brand})</small>
+            <p>Rs. ${Number(item.selling).toLocaleString()}</p>
+            <small style="color:${outOfStock ? 'red' : '#059669'}; font-weight:bold;">
+                ${outOfStock ? 'Out of Stock' : 'Stock: ' + item.stock}
+            </small>
+        `;
+        grid.appendChild(div);
+    });
+}
+
+function filterPosGrid(val) {
+    renderPosProducts(val);
+}
+
+/* EDIT MODAL */
+function openEditModal(sku) {
+    const item = inventoryData.find(i => i.sku === sku);
+    if (!item) return;
+
+    document.getElementById("editSku").value = item.sku;
+    document.getElementById("editName").value = item.name;
+    document.getElementById("editBrand").value = item.brand;
+    document.getElementById("editSize").value = item.size;
+    document.getElementById("editCost").value = item.cost;
+    document.getElementById("editSelling").value = item.selling;
+    document.getElementById("editStock").value = item.stock;
+    document.getElementById("editMinStock").value = item.minStock;
+
+    document.getElementById("modalTitle").innerText = `Edit: ${item.name} (${item.sku})`;
+    document.getElementById("editModal").style.display = "flex";
+}
+
+function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+}
+
+function saveItemChanges() {
+    const sku = document.getElementById("editSku").value;
+    const item = inventoryData.find(i => i.sku === sku);
+    if (!item) return;
+
+    const newName = document.getElementById("editName").value.trim();
+    if (!newName) {
+        alert("Please enter a valid item name.");
+        return;
+    }
+
+    item.name = newName;
+    item.brand = document.getElementById("editBrand").value.trim();
+    item.size = document.getElementById("editSize").value.trim();
+    item.cost = Number(document.getElementById("editCost").value) || 0;
+    item.selling = Number(document.getElementById("editSelling").value) || 0;
+    item.stock = Number(document.getElementById("editStock").value) || 0;
+    item.minStock = Number(document.getElementById("editMinStock").value) || 0;
+
+    localStorage.setItem("decant_planet_inventory", JSON.stringify(inventoryData));
+    closeEditModal();
+    renderAll();
+    alert("Item updated and saved permanently!");
+}
+
+function deleteCurrentItem() {
+    const sku = document.getElementById("editSku").value;
+    const item = inventoryData.find(i => i.sku === sku);
+    if (!item) return;
+
+    if (confirm(`Permanently delete "${item.name}" (${sku})?`)) {
+        inventoryData = inventoryData.filter(i => i.sku !== sku);
+        localStorage.setItem("decant_planet_inventory", JSON.stringify(inventoryData));
+        closeEditModal();
+        renderAll();
+        alert("Item deleted permanently!");
+    }
+}
+
+function addProduct() {
+    const name = prompt("Enter perfume name:");
+    if (!name) return;
+
+    const brand = prompt("Enter brand:") || "General";
+    const size = prompt("Enter size (e.g. 10ml):") || "10ml";
+    const cost = Number(prompt("Enter cost price (Rs.):")) || 0;
+    const selling = Number(prompt("Enter selling price (Rs.):")) || 0;
+    const stock = Number(prompt("Enter stock quantity:")) || 10;
+    const minStock = Number(prompt("Enter minimum alert stock:")) || 5;
+
+    const newSku = "DP-" + String(inventoryData.length + 1).padStart(3, "0");
+
+    inventoryData.push({ sku: newSku, name, brand, size, cost, selling, stock, minStock });
+    localStorage.setItem("decant_planet_inventory", JSON.stringify(inventoryData));
+    renderAll();
+    alert("Product added and saved permanently!");
+}
+
+/* POS & CART */
+function addToCart(sku) {
+    const product = inventoryData.find(p => p.sku === sku);
+    if (!product) return;
+
+    const cartEntry = cart.find(c => c.sku === sku);
+    const currentQtyInCart = cartEntry ? cartEntry.qty : 0;
+
+    if (currentQtyInCart + 1 > product.stock) {
+        alert(`Cannot add more than available stock (${product.stock}).`);
+        return;
+    }
+
+    if (cartEntry) {
+        cartEntry.qty += 1;
+    } else {
+        cart.push({
+            sku: product.sku,
+            name: `${product.name} (${product.size})`,
+            price: product.selling,
+            qty: 1
+        });
+    }
+
+    updateCart();
+}
+
+function changeCartQty(index, delta) {
+    const item = cart[index];
+    const product = inventoryData.find(p => p.sku === item.sku);
+
+    if (delta > 0 && product && item.qty + delta > product.stock) {
+        alert(`Cannot exceed available stock of ${product.stock}.`);
+        return;
+    }
+
+    item.qty += delta;
+    if (item.qty <= 0) {
+        cart.splice(index, 1);
+    }
+    updateCart();
+}
+
+function updateCart() {
+    const container = document.getElementById("cartItems");
+    container.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <div>
+                <div><strong>${item.name}</strong></div>
+                <small>Rs. ${item.price.toLocaleString()} each</small>
+            </div>
+            <div class="cart-item-qty">
+                <button class="cart-qty-btn" onclick="changeCartQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button class="cart-qty-btn" onclick="changeCartQty(${index}, 1)">+</button>
+                <span style="min-width:70px; text-align:right;">Rs. ${subtotal.toLocaleString()}</span>
+                <button onclick="cart.splice(${index},1);updateCart();" style="border:none;background:none;color:red;cursor:pointer;margin-left:4px;">✕</button>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+
+    document.getElementById("cartTotal").innerText = "Rs. " + total.toLocaleString();
+}
+
+/* SALE COMPLETION */
+function completeSale() {
+    if (cart.length === 0) {
+        alert("Cart is empty. Add fragrances to cart first.");
+        return;
+    }
+
+    cart.forEach(cartItem => {
+        const item = inventoryData.find(i => i.sku === cartItem.sku);
+        if (item) {
+            item.stock = Math.max(0, item.stock - cartItem.qty);
+        }
+    });
+
+    localStorage.setItem("decant_planet_inventory", JSON.stringify(inventoryData));
+
+    const invoiceNum = "INV-" + Math.floor(100000 + Math.random() * 900000);
+    const invoiceDate = new Date().toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' });
+    const customerName = document.getElementById("posCustomerName").value.trim() || "Walk-in Customer";
+    const customerEmail = document.getElementById("posCustomerEmail").value.trim();
+
+    const invoiceItems = [...cart];
+    const totalAmount = invoiceItems.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+
+    lastCompletedInvoice = {
+        number: invoiceNum,
+        date: invoiceDate,
+        customerName: customerName,
+        customerEmail: customerEmail,
+        items: invoiceItems,
+        total: totalAmount
+    };
+
+    salesHistory.unshift(lastCompletedInvoice);
+    saveSalesToStorage();
+
+    cart = [];
+    updateCart();
+    renderAll();
+
+    openInvoiceModal(lastCompletedInvoice);
+}
+
+function openInvoiceModal(inv) {
+    document.getElementById("invNumber").innerText = inv.number;
+    document.getElementById("invDate").innerText = inv.date;
+    document.getElementById("invCustomerName").innerText = inv.customerName;
+    document.getElementById("invCustomerEmail").innerText = inv.customerEmail || "";
+
+    const tbody = document.getElementById("invoiceTableBody");
+    tbody.innerHTML = "";
+
+    inv.items.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td style="text-align:center;">${item.qty}</td>
+            <td style="text-align:right;">Rs. ${item.price.toLocaleString()}</td>
+            <td style="text-align:right;">Rs. ${(item.price * item.qty).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("invTotalAmount").innerText = "Rs. " + inv.total.toLocaleString();
+    document.getElementById("invoiceModal").style.display = "flex";
+}
+
+function closeInvoiceModal() {
+    document.getElementById("invoiceModal").style.display = "none";
+}
+
+function printInvoice() {
+    window.print();
+}
+
+function emailInvoice() {
+    if (!lastCompletedInvoice) return;
+
+    const email = lastCompletedInvoice.customerEmail || prompt("Enter recipient email address:");
+    if (!email) return;
+
+    let itemsBody = "";
+    lastCompletedInvoice.items.forEach(i => {
+        itemsBody += `• ${i.name} x ${i.qty} = Rs. ${(i.price * i.qty).toLocaleString()}\n`;
+    });
+
+    const subject = encodeURIComponent(`Invoice ${lastCompletedInvoice.number} from Decant Planet`);
+    const bodyText = encodeURIComponent(
+`Hi ${lastCompletedInvoice.customerName},
+
+Thank you for your purchase from Decant Planet!
+
+Invoice Number: ${lastCompletedInvoice.number}
+Date: ${lastCompletedInvoice.date}
+
+Order Details:
+${itemsBody}
+Total Paid: Rs. ${lastCompletedInvoice.total.toLocaleString()}
+
+We look forward to serving you again!
+
+Best regards,
+Decant Planet
+A Universe of Fragrance.`
+    );
+
+    window.location.href = `mailto:${email}?subject=${subject}&body=${bodyText}`;
+}
+
+/* SYSTEM ADMINISTRATORS MANAGEMENT */
+function renderAdminsTable() {
+    const tbody = document.getElementById("adminsTableBody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    adminsList.forEach((adm, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><strong>${adm.name}</strong></td>
+            <td>${adm.username}</td>
+            <td>${adm.role}</td>
+            <td><span class="badge badge-green">${adm.status || 'Active'}</span></td>
+            <td>
+                ${adminsList.length > 1 ? `<button class="btn btn-danger btn-sm" onclick="deleteAdmin(${index})">Delete</button>` : `<small style="color:#888;">Primary</small>`}
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function openAddAdminModal() {
+    document.getElementById("adminFullName").value = "";
+    document.getElementById("adminUsername").value = "";
+    document.getElementById("adminPassword").value = "";
+    document.getElementById("adminRole").value = "Manager";
+    document.getElementById("addAdminModal").style.display = "flex";
+}
+
+function closeAddAdminModal() {
+    document.getElementById("addAdminModal").style.display = "none";
+}
+
+function saveNewAdmin() {
+    const name = document.getElementById("adminFullName").value.trim();
+    const username = document.getElementById("adminUsername").value.trim();
+    const password = document.getElementById("adminPassword").value.trim();
+    const role = document.getElementById("adminRole").value;
+
+    if (!name || !username || !password) {
+        alert("Please fill in the full name, username, and password fields.");
+        return;
+    }
+
+    const exists = adminsList.some(a => a.username.toLowerCase() === username.toLowerCase());
+    if (exists) {
+        alert("This username already exists. Please choose a different username.");
+        return;
+    }
+
+    adminsList.push({
+        name: name,
+        username: username,
+        password: password,
+        role: role,
+        status: "Active"
+    });
+
+    saveAdminsToStorage();
+    closeAddAdminModal();
+    renderAdminsTable();
+    alert(`Administrator "${name}" created successfully!`);
+}
+
+function deleteAdmin(index) {
+    const target = adminsList[index];
+    if (confirm(`Are you sure you want to remove administrator "${target.name}"?`)) {
+        adminsList.splice(index, 1);
+        saveAdminsToStorage();
+        renderAdminsTable();
+    }
+}
+
+/* CUSTOMERS, SUPPLIERS, EXPENSES PROMPTS */
+function addCustomerPrompt() {
+    const name = prompt("Enter customer full name:");
+    if (!name) return;
+    const phone = prompt("Enter phone number:") || "-";
+    const email = prompt("Enter email:") || "-";
+
+    const tbody = document.getElementById("customersTableBody");
+    if (tbody.innerText.includes("No customer profiles")) {
+        tbody.innerHTML = "";
+    }
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${name}</td><td>${phone}</td><td>${email}</td><td>Rs. 0</td>`;
+    tbody.appendChild(tr);
+}
+
+function addSupplierPrompt() {
+    const name = prompt("Enter supplier company name:");
+    if (!name) return;
+    const contact = prompt("Enter contact person:") || "-";
+    const phone = prompt("Enter phone number:") || "-";
+
+    const tbody = document.getElementById("suppliersTableBody");
+    if (tbody.innerText.includes("No suppliers")) {
+        tbody.innerHTML = "";
+    }
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${name}</td><td>${contact}</td><td>${phone}</td><td>Rs. 0</td>`;
+    tbody.appendChild(tr);
+}
+
+function addExpensePrompt() {
+    const desc = prompt("Enter expense description:");
+    if (!desc) return;
+    const cat = prompt("Enter expense category (e.g., Transport, Packaging):") || "General";
+    const amount = Number(prompt("Enter amount (Rs.):")) || 0;
+    const date = new Date().toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' });
+
+    const tbody = document.getElementById("expensesTableBody");
+    if (tbody.innerText.includes("No expenses recorded")) {
+        tbody.innerHTML = "";
+    }
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${date}</td><td>${cat}</td><td>${desc}</td><td>Rs. ${amount.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+}
+
+/* AUTHENTICATION */
+function login() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+
+    const foundAdmin = adminsList.find(a => a.username === user && a.password === pass);
+
+    if (foundAdmin || (user === "admin" && pass === "admin123")) {
+        const activeName = foundAdmin ? foundAdmin.name : "Admin";
+        document.getElementById("loggedInUserDisplay").innerText = `👤 ${activeName}`;
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        renderAll();
+    } else {
+        alert("Invalid username or password.");
+    }
+}
+
+function logout() {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+}
+
+function showSection(section, button) {
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(section).classList.add("active");
+
+    document.querySelectorAll(".menu button").forEach(b => b.classList.remove("active"));
+    if (button) button.classList.add("active");
+
+    const titles = {
+        dashboard: "Dashboard",
+        products: "Products",
+        inventory: "Inventory",
+        sales: "Sales / POS",
+        purchases: "Purchases",
+        customers: "Customers",
+        suppliers: "Suppliers",
+        expenses: "Expenses",
+        reports: "Reports",
+        admins: "Administrators"
+    };
+    document.getElementById("pageTitle").innerText = titles[section] || "Decant Planet ERP";
+}
+
+function searchProducts(value) {
+    const rows = document.querySelectorAll("#productTable tbody tr");
+    value = value.toLowerCase();
+    rows.forEach(row => {
+        row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+    });
+}
+
+// Startup execution
+renderAll();
+</script>
+
+</body>
+</html>
